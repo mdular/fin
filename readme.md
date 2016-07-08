@@ -1,6 +1,6 @@
 # Personal finance toolset
 
-## CSV export procedure
+## CSV export procedure (from websites)
 TODO: add links
 TODO: folder/file structure
 
@@ -16,7 +16,7 @@ Sparkasse Mainfranken-Würzburg
 ## TODO LIST
 elasticsearch import
 es client, simple filter bar
-transaction type, 'Buchungstext' from Haspa
+transaction type constants in base resolver
 
 ## Backlog
 hash entries to generate smart ref field, detect duplicates for imports

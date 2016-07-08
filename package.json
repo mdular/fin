@@ -1,0 +1,22 @@
+{
+  "name": "fin",
+  "version": "1.0.0",
+  "description": "## CSV export procedure (from websites) TODO: add links TODO: folder/file structure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdular/fin.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdular/fin/issues"
+  },
+  "homepage": "https://github.com/mdular/fin#readme",
+  "dependencies": {
+    "elasticsearch": "^11.0.1"
+  }
+}
