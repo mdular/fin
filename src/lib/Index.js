@@ -1,9 +1,13 @@
 class Index {
-    constructor (config, indexName, client) {
-        this.config = config;
-        this.defaultType = config.type || 'default';
-        this.indexName = indexName;
-        this.client = client;
+    constructor (options) {
+        if (!options.client) {
+            throw new Error('Argument error: client must be set');
+        }
+
+        this.options = options;
+        this.defaultType = options.defaultType || 'default';
+        this.indexName = options.index || 'default';
+        this.client = options.client;
     }
 
     delete () {
