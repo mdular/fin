@@ -100,7 +100,7 @@ class Parser {
             }
 
             // validate type: if field type is declared, only set valid type
-            if (typeof field.type !== 'undefined' && !this.validateType(field.type, processedField)) {
+            if (typeof processedField !== 'undefined' && typeof field.type !== 'undefined' && !this.validateType(field.type, processedField)) {
                 console.log(`Parser warning:  ${fieldName}:${processedField}  is not of type  ${field.type}  and was not set`);
                 continue;
             }
@@ -123,6 +123,10 @@ class Parser {
     * date - valid Date string and passing isFinite test
     */
     validateType (type, value) {
+        if (typeof value === 'undefined') {
+            return false;
+        }
+
         // validate date type
         if (type === 'date') {
             let date = new Date(value);
