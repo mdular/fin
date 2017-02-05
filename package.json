@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/mdular/fin#readme",
   "dependencies": {
-    "elasticsearch": "^11.0.1"
+    "elasticsearch": "^12.1.3"
   }
 }
