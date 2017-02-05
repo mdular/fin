@@ -2,11 +2,11 @@ var Index = require('../lib/Index');
 
 class EventsIndex extends Index {
     constructor (options) {
-        super(Object.assign({}, options, {index:"events"}));
+        super(Object.assign({}, options, {indexName:"events"}));
     }
 
     ensureMapping () {
-        super.ensureMapping({
+        return super.ensureMapping({
             "default": {
                 "dynamic": false,
                 "properties": {

@@ -6,7 +6,7 @@ class Index {
 
         this.options = options;
         this.defaultType = options.defaultType || 'default';
-        this.indexName = options.index || 'default';
+        this.indexName = options.indexName || 'default';
         this.client = options.client;
     }
 
@@ -16,6 +16,10 @@ class Index {
 
     create (value) {
         return this.client.indices.create({index: this.indexName});
+    }
+
+    exists () {
+        return this.client.indices.exists({index: this.indexName});
     }
 
     ensureMapping (mapping) {
@@ -39,28 +43,33 @@ class Index {
     index (documents, type) {
         let parsedCount = 0;
         let indexedCount = 0;
-        let docs = documents;
         let promises = [];
 
-        for (let i in docs) {
-            let doc = docs[i];
+        for (let i in documents) {
+            let doc = documents[i];
             parsedCount++;
 
-            promises.push(this.client.create({
-                index: this.indexName,
-                type: type || this.defaultType,
-                // id: '2',
-                body: doc
-            }).then((value) => {
-                indexedCount++;
-            }));
+            promises.push(this.client.index({
+                    index: this.indexName,
+                    type: type || this.defaultType,
+                    id: doc.id,
+                    body: doc.body
+                })
+                .then((value) => {
+                    indexedCount++;
+                    return Promise.resolve(value);
+                })
+            );
         }
 
         return Promise.all(promises)
         .then((value) => {
-            console.log(`indexed: ${indexedCount} of ${parsedCount}`);
+            // console.log(`indexed: ${indexedCount} of ${parsedCount}`);
+            // console.log(value);
+            return Promise.resolve(`indexed: ${indexedCount} of ${parsedCount}`);
         }, (reason) => {
-            console.log('rejected', reason);
+            console.log('At least one document failed to index. current count:', indexedCount);
+            return Promise.reject(reason);
         });
     }
 }
