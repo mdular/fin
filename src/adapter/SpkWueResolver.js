@@ -46,6 +46,9 @@ class SpkWueResolver extends Resolver {
                     return date < new Date();
                 }
             },
+            'party' : {
+                value: "Beguenstigter/Zahlungspflichtiger"
+            },
             'type' : {
                 value: (data) => {
                     switch (data['Buchungstext']) {
@@ -83,8 +86,8 @@ class SpkWueResolver extends Resolver {
                     return false;
                 }
             },
-            'party' : {
-                value: "Beguenstigter/Zahlungspflichtiger"
+            'info': {
+                value: "Verwendungszweck"
             }
         })
 

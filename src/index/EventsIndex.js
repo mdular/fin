@@ -10,10 +10,6 @@ class EventsIndex extends Index {
             "default": {
                 "dynamic": false,
                 "properties": {
-                    "_ref": {
-                        "type": "string",
-                        "index": "not_analyzed"
-                    },
                     "account": {
                         "type": "string"
                     },
@@ -33,6 +29,9 @@ class EventsIndex extends Index {
                     "type": {
                         "type": "string",
                         "index": "not_analyzed"
+                    },
+                    "info": {
+                        "type": "string"
                     },
                     "_data": {
                         "type": "object",

@@ -88,7 +88,7 @@ class Parser {
             // validate required: if required = true field must be defined
             if (field.required) {
                 if (typeof processedField === 'undefined') {
-                    throw new Error(`Parser error: required field is undefined ${fieldName}`);
+                    throw new Error(`Parser error: required field is undefined "${fieldName}"`);
                 }
             }
 
