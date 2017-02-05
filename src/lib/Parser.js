@@ -24,12 +24,12 @@ class Parser {
         let rows = buffer.toString();
         rows = rows.split(this.LINE_DELMITER);
 
-        if (this.NO_HEADER === false) {
-            this.schema = this.parseSchema(rows.shift());
-        } else {
+        if (this.NO_HEADER === true) {
             // TODO: implement
-            throw new Error('CSV without headless / custom schema not supported yet.');
+            throw new Error('CSV without header / custom schema not supported yet.');
         }
+
+        this.schema = this.parseSchema(rows.shift());
 
         let parsed = this.parseRows(rows);
         return parsed;
@@ -55,20 +55,13 @@ class Parser {
         return parsed;
     }
 
-    processRow (index, row) {
-        let processed = Object.assign(
-            {'_ref' : undefined},
-            this.processFields(row),
-            {'_data' : row}
-        );
+    processRow (idx, row) {
+        let processedFields = this.processFields(row);
 
-        // add reference
-        if (
-            typeof processed['_ref'] === 'undefined'
-            || processed['_ref'].length === 0
-        ) {
-            processed['_ref'] = this.resolver.generateReference(index, processed)
-        }
+        let processed = {
+            id: this.resolver.generateReference(idx, processedFields),
+            body: Object.assign(processedFields, {_data: row})
+        };
 
         return processed;
     }
@@ -108,6 +101,7 @@ class Parser {
             // validate field: custom validation function on resolver
             if (this.resolver && !this.resolver.validateField(fieldName, processedField)) {
                 console.log(`Validation failed on ${fieldName}, value:${processedField}`)
+                continue;
             }
 
             processed[fieldName] = processedField;

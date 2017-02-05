@@ -1,4 +1,6 @@
 var Resolver = require('../lib/Resolver');
+var NumberStrings = require('../lib/NumberStrings');
+var DateStrings = require('../lib/DateStrings');
 
 // csv fields: "Auftragskonto";"Buchungstag";"Valutadatum";"Buchungstext";"Verwendungszweck";"Beguenstigter/Zahlungspflichtiger";"Kontonummer";"BLZ";"Betrag";"Waehrung";"Info"
 
@@ -89,6 +91,30 @@ class SpkWueResolver extends Resolver {
         if (additionalFields) {
             this.addFields(additionalFields);
         }
+    }
+
+    generateReference (idx, data) {
+        let dateString = DateStrings.dateToHexString(data.date);
+        // cents as integer
+        let amount = NumberStrings.numberToHexString(data.amount * 100);
+
+        let ref = dateString + amount;
+
+        // console.log('ref:', ref);
+        // console.log(this.getAmountFromReference(ref));
+        // console.log(this.getDateFromReference(ref));
+
+        return ref;
+    }
+
+    getDateFromReference (ref) {
+        ref = ref.substr(0, 11);
+        return DateStrings.hexStringToDate(ref);
+    }
+
+    getAmountFromReference (ref) {
+        ref = ref.substr(11, 8);
+        return NumberStrings.hexStringToNumber(ref) / 100;
     }
 }
 
